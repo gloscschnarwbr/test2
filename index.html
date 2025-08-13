@@ -8,12 +8,23 @@
     font-family: Arial, sans-serif;
     background-color: white;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
+    margin: 0;
+  }
+  .points {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 20px;
   }
   .slot-machine {
-    text-align: center;
+    background-color: #ddd;
+    border: 6px solid #333;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 30px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
   .reels {
     display: flex;
@@ -33,22 +44,22 @@
     overflow: hidden;
     position: relative;
   }
-  .symbols {
-    position: absolute;
-    animation: spin 0.1s linear infinite;
+  .username {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-weight: bold;
   }
   @keyframes spin {
     from { transform: translateY(0); }
     to { transform: translateY(-100%); }
   }
-  button {
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-  }
 </style>
 </head>
 <body>
+
+<div class="points" id="points">Points: 100</div>
+
 <div class="slot-machine">
   <div class="reels">
     <div class="reel" id="reel1">🍒</div>
@@ -58,20 +69,33 @@
   <button onclick="spin()">Spin</button>
 </div>
 
+<div class="username" id="username">Player1</div>
+
 <script>
   const symbols = ["🍒", "🍋", "🍉", "🍇", "⭐", "🔔"];
-  
+  let points = 100;
+
   function spin() {
-    const reels = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
+    const reels = [
+      document.getElementById('reel1'),
+      document.getElementById('reel2'),
+      document.getElementById('reel3')
+    ];
     
+    // Deduct a point per spin
+    points -= 1;
+    document.getElementById('points').textContent = "Points: " + points;
+
     reels.forEach((reel, index) => {
+      reel.textContent = " ";
       reel.style.animation = "spin 0.1s linear infinite";
       setTimeout(() => {
         reel.style.animation = "none";
         reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-      }, 1000 + (index * 500)); // Stops one by one
+      }, 1000 + (index * 500));
     });
   }
 </script>
+
 </body>
 </html>
