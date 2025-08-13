@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slot Machine</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .slot-machine {
+    text-align: center;
+  }
+  .reels {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .reel {
+    width: 100px;
+    height: 100px;
+    margin: 0 10px;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #000;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    position: relative;
+  }
+  .symbols {
+    position: absolute;
+    animation: spin 0.1s linear infinite;
+  }
+  @keyframes spin {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="slot-machine">
+  <div class="reels">
+    <div class="reel" id="reel1">🍒</div>
+    <div class="reel" id="reel2">🍋</div>
+    <div class="reel" id="reel3">🍉</div>
+  </div>
+  <button onclick="spin()">Spin</button>
+</div>
+
+<script>
+  const symbols = ["🍒", "🍋", "🍉", "🍇", "⭐", "🔔"];
+  
+  function spin() {
+    const reels = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
+    
+    reels.forEach((reel, index) => {
+      reel.style.animation = "spin 0.1s linear infinite";
+      setTimeout(() => {
+        reel.style.animation = "none";
+        reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      }, 1000 + (index * 500)); // Stops one by one
+    });
+  }
+</script>
+</body>
+</html>
